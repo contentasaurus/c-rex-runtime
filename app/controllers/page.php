@@ -1,31 +1,35 @@
 <?php
 
-namespace App\Http\Controllers\Pub;
+use \puffin\model as model;
+use \puffin\view as view;
 
-use App\Models\Pub\Page;
-use App\Models\Pub\Post;
-use App\Models\Pub\Event;
-use Response;
-use Request;
-use View;
+class index_controller extends puffin\controller\action
+{
+	public function __construct(){}
 
-class PageController extends BaseController {
-
-	public function index() {
-
+	public function index( $permalink )
+	{
 		$data = [];
 
-		$page = Page::where('permalink', '=', Request::path());
+		$page_model = new page();
+		$page = $page_model->get_by_permalink( $permalink );
 
-		if ($page->count()) {
-			$data['page'] = $page->first();
-			$data['page']->content = $this->replaceModule($data['page']->content);
+		if( $page->count() )
+		{
+			view::add_params( $page );
 
-			return $this->checkIfPublished($data['page'], View::make($this->getTemplate(), $data));
+			// $data['page'] = $page->first();
+			// $data['page']->content = $this->replaceModule($data['page']->content);
+			//
+			// return $this->checkIfPublished($data['page'], View::make($this->getTemplate(), $data));
 
-		} else {
-			return Response::view('pub/pages/404', array('reponse' => 404), 404);
 		}
+		else
+		{
+			view::layout('error page');
+			view::template('error/error404');
+		}
+
 	}
 
 }

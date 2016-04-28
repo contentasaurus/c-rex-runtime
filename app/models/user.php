@@ -1,15 +1,10 @@
 <?php
 
-  namespace App\Models\Pub;
+use \puffin\model\pdo as pdo;
+use \puffin\model as Model;
 
-  class User extends \Moloquent
-  {
-
-      protected $collection = 'users';
-      protected $hidden = ['password', 'remember_token'];
-
-      public function page() {
-        return $this->hasMany('Page', 'author', '_id');
-      }
-
-  }
+class user extends pdo
+{
+	protected $connection = 'default';
+	protected $table = 'users';
+}

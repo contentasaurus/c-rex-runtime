@@ -3,8 +3,8 @@
 use \puffin\model\pdo as pdo;
 use \puffin\model as Model;
 
-class page extends pdo
+class type extends pdo
 {
 	protected $connection = 'default';
-	protected $table = 'pages';
+	protected $table = 'page_types';
 }
