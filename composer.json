@@ -1,13 +1,14 @@
 {
-	"name": "pinguinio/puffin-atlantic-bootstrap",
-    "description": "Atlantic Puffin CMS.",
-    "license": "MIT",
+	"name": "pinguinio/atlantic-bootstrap",
+	"description": "Atlantic Puffin CMS.",
+	"license": "MIT",
+	"minimum-stability":"dev",
 	"require": {
-	  "pinguinio/puffin-framework": "1.0.*",
-	  "pinguinio/puffin-feather": "1.0.*"
+		"pinguinio/puffin-framework": "1.0.*",
+		"pinguinio/puffin-feather": "1.0.*",
+		"phpmailer/phpmailer": "~5.2"
 	},
 	"config": {
 		"vendor-dir": "vendor"
-	},
-	"minimum-stability":"alpha"
+	}
 }
