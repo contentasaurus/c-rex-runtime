@@ -10,6 +10,13 @@ use \puffin\dsn as dsn;
 function debug( $input ){ echo debug::printr($input); }
 function clog( $input ){ echo debug::clog($input); }
 function redirect( $location = false ){ url::redirect($location); }
+function vd($arg) { 
+	ob_start();
+	echo var_dump($arg);
+	$output = ob_get_clean();
+	$output = htmlentities($output);
+	echo '<pre>'.$output.'</pre>'; 
+}
 
 dsn::set('default', [
 	'type' => 'mysql',
@@ -20,11 +27,11 @@ dsn::set('default', [
 ]);
 
 #Plugins
-plugin::register('bower');
-plugin::register('theme');
-plugin::register('forceauth');
-plugin::register('fonts');
-plugin::register('layout');
+// plugin::register('bower');
+// plugin::register('theme');
+// plugin::register('forceauth');
+// plugin::register('fonts');
+// plugin::register('layout');
 
 #Routes
 include_once 'routes.php';
