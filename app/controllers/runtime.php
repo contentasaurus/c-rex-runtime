@@ -1,54 +1,101 @@
 <?php
 
-use \puffin\model as model;
 use \puffin\view as view;
+use \puffin\file as file;
+use \puffin\directory as directory;
 use \puffin\controller\action as action;
-use \puffin\split_resolver as split_resolver;
 
 class runtime_controller extends action
 {
-	private $page_data = [
-		'PAGE' => [],
-		'DATA' => []
-	];
-	
-	public function __construct() 
+	public function __construct(){}
+
+	public function __init()
 	{
-		// works here but not in any controller method, 
-		// constrains each controller to a specific response view type
-		view::init('handlebars');
+		$this->runtime = new runtime();
+		$this->hbs = new handlebars();
 	}
 
-	public function index($permalink = '/')
+	public function index( $permalink = '/' )
 	{
-		$page = new page();
-		$pages = $page->get_by_permalink($permalink);
-		$this_page = $this->resolve_page($pages);
+		if($permalink != '/')
+		{
+			$permalink = "/$permalink";
+		}
 
-		if(!!$this_page['compiled_lightncandy']) {
-			$page_data = $page->get_data($this_page['page']);
-			$this->resolve_data($page_data);
-			view::add_params($this->page_data);
-			view::renderer($this_page['compiled_lightncandy']); 
+		$pages = $this->runtime->get_by_permalink($permalink);
+
+		$this_page = $this->do_split_test( $pages );
+
+		if( !!$this_page['for_render'] )
+		{
+			$data = [
+				'Data' => $this->runtime->get_data( $this_page['page'] ),
+				'Post' => $this->post->params(),
+				'Get' => $this->get->params(),
+				'Server' => $_SERVER,
+				'Session' => $_SESSION,
+			];
 		}
-		else {
-			view::html($this_page['contents']);
+		else
+		{
+			#go to error page
+			die('Page not found!');
+			exit;
 		}
+
+		$this->check_for_script_files();
+
+		$html = $this->hbs->render( $this_page['for_render'], $data );
+
+		view::layout('runtime');
+		view::add_param( 'html', $html );
 	}
 
-	private function resolve_page($pages) 
+	#-------------------------------------------------
+
+	private function check_for_script_files()
+	{
+		$key = $this->runtime->get_current_key();
+
+		$path = PUBLIC_PATH . "/runtime/$key/";
+
+		if( !directory::exists( $path ) )
+		{
+			directory::create( $path );
+		}
+
+		$files = $this->runtime->get_scripts();
+
+		foreach( $files as $file )
+		{
+			$this_file = $path . $file['name'];
+			if( !file::exists($this_file ) )
+			{
+				file::write( $this_file, $file['content'] );
+			}
+		}
+
+	}
+
+	private function do_split_test( $pages )
 	{
 		$page = null;
 
-		if(count($pages) > 1) {
+		if(count($pages) > 1)
+		{
 			$splits = [];
-			foreach($pages as $key => $p) {
+
+			foreach( $pages as $key => $p )
+			{
 				$splits[$key] = $p['percentage'];
 			}
-			$decision = split_resolver::resolve($splits);
+
+			$decision = $this->runtime->resolve_split( $splits );
+
 			$page = $pages[$decision];
 		}
-		else {
+		else
+		{
 			$page = reset($pages);
 		}
 
@@ -56,14 +103,5 @@ class runtime_controller extends action
 		$this->page_data['PAGE']['title'] = $page['title'];
 
 		return $page;
-	}
-
-	private function resolve_data($data) 
-	{
-		foreach ($data as $key => $value) {
-			$content = json_decode($value['content']);
-			$name = $value['reference_name'];
-			$this->page_data['DATA'][$name] = $content;
-		}
 	}
 }

@@ -1,7 +1,7 @@
 {
-  "name": "runtime-bootstrap",
+  "name": "atlantic-cms-runtime",
   "version": "1.0.0",
-  "description": "Template repo for new runtimes based off a puffin-atlantic admin",
+  "description": "Template repo for new runtimes based off a atlantic-cms-admin",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/pinguinio/puffin-atlantic-bootstrap.git"
   },
-  "author": "",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/pinguinio/puffin-atlantic-bootstrap#readme"
+  "author": "Joshua Byington",
+  "license": "MIT",
+  "homepage": "https://github.com/pinguinio/atlantic-cms-runtime"
 }

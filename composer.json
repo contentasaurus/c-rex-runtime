@@ -1,12 +1,11 @@
 {
-	"name": "pinguinio/atlantic-bootstrap",
-	"description": "Framework to handle exports from the Atlantic Puffin CMS Admin tool.",
+	"name": "pinguinio/atlantic-cms-runtime",
+	"description": "Framework to handle exports from the Atlantic CMS Admin tool.",
 	"license": "MIT",
 	"minimum-stability":"dev",
 	"require": {
 		"pinguinio/puffin-framework": "1.0.*",
 		"pinguinio/puffin-feather": "1.0.*",
-		"phpmailer/phpmailer": "~5.2",
 		"zordius/lightncandy": "dev-master"
 	},
 	"config": {
