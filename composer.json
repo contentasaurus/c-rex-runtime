@@ -1,12 +1,12 @@
 {
-	"name": "pinguinio/atlantic-cms-runtime",
-	"description": "Framework to handle exports from the Atlantic CMS Admin tool.",
+	"name": "contentasaurus/c-rex-runtime",
+	"description": "Framework to handle exports from the Contentasaurus Admin tool.",
 	"license": "MIT",
 	"minimum-stability":"dev",
 	"require": {
-		"pinguinio/puffin-framework": "1.0.*",
-		"pinguinio/puffin-feather": "1.0.*",
-		"zordius/lightncandy": "dev-master"
+		"contentasaurus/puffin-framework": "1.0.*",
+		"contentasaurus/puffin-feather": "1.0.*",
+		"contentasaurus/lightncandy": "dev-master"
 	},
 	"config": {
 		"vendor-dir": "vendor"
