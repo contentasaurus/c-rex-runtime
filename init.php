@@ -31,10 +31,10 @@ require VENDOR_PATH . '/autoload.php';
 
 ############################################
 
-define('DB_NAME', 'atlantic_runtime');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '*T3mp3st!');
-define('DB_ADDRESS', '45.55.40.232');
+define('DB_NAME', 'crex_runtime');
+define('DB_USER', 'crex_runtime');
+define('DB_PASSWORD', 'password');
+define('DB_ADDRESS', '127.0.0.1');
 
 ############################################
 

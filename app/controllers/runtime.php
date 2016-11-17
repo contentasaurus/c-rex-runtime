@@ -55,26 +55,30 @@ class runtime_controller extends action
 
 	private function check_for_script_files()
 	{
+		$public_path = PUBLIC_PATH;
+
 		$key = $this->runtime->get_current_key();
+		$layouts = $this->runtime->get_layouts();
 
-		$path = PUBLIC_PATH . "/runtime/$key/";
-
-		if( !directory::exists( $path ) )
+		foreach( $layouts as $layout ) 
 		{
-			directory::create( $path );
-		}
+			$path = "${public_path}/runtime/${key}/${layout['layout_name']}";
+			if( !directory::exists( $path ) )
+			{
+				directory::create( $path );
+			}
+		}		
 
 		$files = $this->runtime->get_scripts();
-
+		
 		foreach( $files as $file )
 		{
-			$this_file = $path . $file['name'];
-			if( !file::exists($this_file ) )
+			$this_file = "${public_path}/runtime/${file['name']}";
+			if( !file::exists($this_file) )
 			{
 				file::write( $this_file, $file['content'] );
 			}
 		}
-
 	}
 
 	private function do_split_test( $pages )

@@ -10,7 +10,7 @@ use \puffin\dsn as dsn;
 function debug( $input ){ echo debug::printr($input); }
 function clog( $input ){ echo debug::clog($input); }
 function redirect( $location = false ){ url::redirect($location); }
-function vd($arg) { 
+function dump($arg) { 
 	ob_start();
 	echo var_dump($arg);
 	$output = ob_get_clean();

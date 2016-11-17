@@ -98,4 +98,9 @@ class runtime extends pdo
 		return $this->select( 'SELECT * FROM scripts' );
 	}
 
+	public function get_layouts() 
+	{
+		return $this->select( 'SELECT * FROM layouts' );
+	}
+
 }
