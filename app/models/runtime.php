@@ -8,9 +8,11 @@ class runtime extends pdo
 
 	public function get_by_permalink( $permalink )
 	{
-		$sql = 'SELECT *
-				FROM pages
-				WHERE permalink = :permalink';
+		$sql = "SELECT *,
+		    	REPLACE( :permalink, REPLACE(permalink, '%', ''), '') AS token
+				FROM pages 
+				WHERE :permalink LIKE permalink
+				ORDER BY permalink";
 
 		$params = [
 			':permalink' => $permalink
