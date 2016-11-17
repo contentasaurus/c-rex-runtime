@@ -29,11 +29,13 @@ class runtime_controller extends action
 		if( !!$this_page['for_render'] )
 		{
 			$data = [
-				'Data' => $this->runtime->get_data( $this_page['page'] ),
-				'Post' => $this->post->params(),
-				'Get' => $this->get->params(),
-				'Server' => $_SERVER,
+				'Site'    => $this->runtime->get_site_data(),
+				'Page'    => $this->runtime->get_data( $this_page['page'] ),
+				'Post'    => $this->post->params(),
+				'Get'     => $this->get->params(),
+				'Server'  => $_SERVER,
 				'Session' => $_SESSION,
+				'Cookie'  => $_COOKIE
 			];
 		}
 		else

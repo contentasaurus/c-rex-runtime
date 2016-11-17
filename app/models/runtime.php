@@ -9,7 +9,7 @@ class runtime extends pdo
 	public function get_by_permalink( $permalink )
 	{
 		$sql = "SELECT *,
-		    	REPLACE( :permalink, REPLACE(permalink, '%', ''), '') AS token
+				REPLACE( :permalink, REPLACE(permalink, '%', ''), '') AS token
 				FROM pages 
 				WHERE :permalink LIKE permalink
 				ORDER BY permalink";
@@ -32,6 +32,23 @@ class runtime extends pdo
 		];
 
 		$data = $this->select($sql, $params);
+
+		$return = [];
+		foreach( $data as $datum )
+		{
+			$return[$datum['reference_name']] = json_decode($datum['content'], $assoc = true);
+		}
+
+		return $return;
+
+	}
+
+	public function get_site_data()
+	{
+		$sql = 'SELECT *
+				FROM site_data';
+				
+		$data = $this->select($sql);
 
 		$return = [];
 		foreach( $data as $datum )
