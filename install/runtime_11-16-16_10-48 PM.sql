@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 10.0.27-MariaDB)
 # Database: crex_runtime
-# Generation Time: 2016-11-17 04:42:31 +0000
+# Generation Time: 2016-11-17 04:48:47 +0000
 # ************************************************************
 
 
@@ -29,11 +29,17 @@ CREATE TABLE `___recent_deployments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `deployment_key` varchar(50) NOT NULL,
   `deployed_by` varchar(100) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `is_current` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `before_recent_deployments_insert` BEFORE INSERT ON `___recent_deployments` FOR EACH ROW SET new.created_at = now() */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
 # Dump of table __components_template
